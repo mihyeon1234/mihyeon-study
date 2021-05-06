@@ -1,0 +1,139 @@
+// Q1. make a string out of an array
+array를 string으로
+{
+  const fruits = ['apple', 'banana', 'orange'];
+  const result = fruits.join()
+  결과 ==>[apple, banana , orange] 구분자가 없으면 기본은 콤마
+  const result = fruits.join('|')
+  결과 ==>[apple | banana | orange]
+
+}
+
+// Q2. make an array out of a string
+join이랑 반대로 string 을 array로
+{
+  const fruits = '🍎, 🥝, 🍌, 🍒';
+  const result = fruits.split(',');
+    결과 ==>['🍎', '🥝', '🍌', '🍒']
+  const result = fruits.split(',',2); 리미트(2) 
+    결과 ==>['🍎', '🥝']
+
+}
+
+// Q3. make this array look like this: [5, 4, 3, 2, 1]
+배열의 순서를 거꾸로
+{
+  const array = [1, 2, 3, 4, 5];
+  const result = array.reverse() 배열 자체를 변화시키고 리턴값도 변화시킴
+   결과 ==>[5, 4, 3, 2, 1]
+}
+
+// Q4. make new array without the first two elements
+1과 2가 제외된 새로운 배열 만들기
+{
+  const array = [1, 2, 3, 4, 5];
+  const result = array.splice(0,2); 인덱스 0부터 2개 삭제
+  array 결과 ==>[3, 4, 5]  but 새로운 배열을 만들어야 함으로 splice 가 아님
+  const result = array.slice(2,5);  인덱스 2부터 5까지 지만 5는 제외되서 2,3,4번째 값만 받아옴
+  result 결과 ==>[3, 4, 5] 
+  array  결과 ==>[1, 2, 3, 4, 5] //원본이 그대로 살아있고 새로운 result로 배열이 만들어짐
+}
+
+
+//splice는 배열 자체를 수정하고 slice는 원하는부분만 리턴에서 받아옴
+
+class Student {
+  constructor(name, age, enrolled, score) {
+    this.name = name;
+    this.age = age;
+    this.enrolled = enrolled;
+    this.score = score;
+  }
+}
+const students = [
+  new Student('A', 29, true, 45),
+  new Student('B', 28, false, 80),
+  new Student('C', 30, true, 90),
+  new Student('D', 40, false, 66),
+  new Student('E', 18, true, 88),
+];
+
+// Q5. find a student with the score 90
+학생의 점수가 90점인 학생 찾기
+{
+ const result = students.find(function(student, index){
+return student.score === 90;
+ });
+  const result = students.find((student)=>student.score === 90); //위에꺼를 한줄로
+  consol.log(result);
+}
+
+// Q6. make an array of enrolled students
+enrolled가 true인 학생으로 만든 배열
+{
+const result = students.filter((student)=>student.enrolled)
+}
+
+// Q7. make an array containing only the students' scores
+// result should be: [45, 80, 90, 66, 88]
+{
+const result = students.map((student)=>student.score)
+//점수만 들어있는 배열로 만들어짐
+ 결과=>[45, 80, 90, 66, 88]
+
+const result = students.map((student)=>student.score * 2)
+//두배인 점수로 배열 생성
+결과=>[90, 160, 180, 132, 176]
+}
+
+// Q8. check if there is a student with the score lower than 50
+학생들중 50점 이하가 있는지 없는지 확인
+{
+const result = students.some((student)=>student.score <50)
+결과=>true
+한 학생이라도 해당되면 true로 반환
+
+const result = students.every((student)=>student.score <50) 
+결과=>false
+모든값이 해당되야지 true로 반환
+}
+
+// Q9. compute students' average score
+학생들의 평균점수 구하기(이해 잘안감..)
+{
+const result = students.reduce((prev, curr)=>{
+    consol.log('--------')
+    consol.log('prev')
+    consol.log('curr')
+    return prev + curr.score;
+},0);// curr 초기값을 0으로
+
+}//순차적으로 누적된 값
+
+{
+    const result = students.reduce((prev, curr)=>prev + curr.score, 0);
+    consol.log(return / students.lenght) 
+     결과 =>73.8
+}
+
+// Q10. make a string containing all the scores
+// result should be: '45, 80, 90, 66, 88'
+{
+const result = students.map((student)=>student.score); 일단 student score 로 만 만들어진 배열 만들기
+
+const result = students.map((student)=>student.score)
+.filter((score)=>score >=50)
+.join();
+
+}  //함수들끼리 묶어서 사용 가능
+
+// Bonus! do Q10 sorted in ascending order
+// result should be: '45, 66, 80, 88, 90'
+낮은점수로 정렬해서 새로운 배열로 만들기
+{
+const result = students.map((student)=>student.score)
+.sort((a,b)=> a-b) 작은거부터
+//.sort((a,b)=> b-a)큰거부터
+.join();
+consol.log(result);
+}
